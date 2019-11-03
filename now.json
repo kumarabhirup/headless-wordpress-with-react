@@ -1,18 +1,24 @@
 {
   "version": 2,
-  "name": "jamstack",
+  "name": "headless-wordpress-with-react",
   "public": true,
-  "alias": ["jamstack"],
+  "alias": [
+    "hwwr"
+  ],
   "build": {
     "env": {}
   },
-  "builds": [{
-    "src": "packages/web/package.json",
-    "use": "@now/next"
-  }],
-  "routes": [{
-    "src": "(.*)",
-    "dest": "packages/web$1",
-    "continue": true
-  }]
+  "builds": [
+    {
+      "src": "packages/web/package.json",
+      "use": "@now/next"
+    }
+  ],
+  "routes": [
+    {
+      "src": "(.*)",
+      "dest": "packages/web$1",
+      "continue": true
+    }
+  ]
 }
