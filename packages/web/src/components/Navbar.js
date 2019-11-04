@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 
-// import '../../sass/index.sass'
+import '../../sass/index.sass'
 
 export default function Navbar() {
   return (
