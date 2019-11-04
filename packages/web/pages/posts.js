@@ -3,16 +3,16 @@ import Head from 'next/head'
 
 import '../sass/index.sass'
 import meta from '../src/api/meta'
-import HomeComponent from '../src/components/Home'
+import Posts from '../src/components/Posts'
 import WithNavbar from '../src/components/WithNavbar'
 
-export default function HomePage() {
+export default function PostsPage() {
   return (
     <WithNavbar>
       <Head>
         <title>{meta.title}</title>
       </Head>
-      <HomeComponent />
+      <Posts />
     </WithNavbar>
   )
 }
