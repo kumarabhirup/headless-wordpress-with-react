@@ -16,5 +16,5 @@ export default function WithNavbar(props) {
 }
 
 WithNavbar.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 }
