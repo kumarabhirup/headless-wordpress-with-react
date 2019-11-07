@@ -18,7 +18,7 @@ export default function Posts(props) {
       <Grid>
         {posts &&
           // eslint-disable-next-line camelcase
-          posts.map(({ title, excerpt, id, author, featured_media }) => (
+          posts.map(({ title, excerpt, id, author, featured_media, date }) => (
             <PostCard
               title={title.rendered}
               excerpt={excerpt.rendered}
@@ -28,6 +28,7 @@ export default function Posts(props) {
                 featured_media &&
                 featured_media.media_details.sizes.large.source_url
               }
+              dateTime={date}
               key={id}
             />
           ))}

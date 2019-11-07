@@ -2,12 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Card, Icon } from 'semantic-ui-react'
 import ReactHtmlParser from 'react-html-parser'
+import moment from 'moment'
 
 function PostCard(props) {
-  const { title, excerpt, author, image } = props
+  const { title, excerpt, author, image, dateTime } = props
 
   const postFallbackImage =
     'https://schema.press/wp-content/uploads/edd/2019/01/schema-default-image.png'
+
+  const publishedAgo = moment(dateTime).fromNow()
 
   return (
     <article>
@@ -19,6 +22,9 @@ function PostCard(props) {
           <>
             <Icon name="user" />
             {author.name}
+            &nbsp;&nbsp;
+            <Icon name="time" />
+            {publishedAgo}
           </>
         }
       />
@@ -37,6 +43,7 @@ PostCard.propTypes = {
     }).isRequired,
   }).isRequired,
   image: PropTypes.string,
+  dateTime: PropTypes.string.isRequired,
 }
 
 export default PostCard
