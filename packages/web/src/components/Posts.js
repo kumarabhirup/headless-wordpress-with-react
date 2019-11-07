@@ -16,6 +16,7 @@ export default function Posts(props) {
       {error && <h3>Error.</h3>}
 
       <Grid>
+        {!loading && !error && posts.length < 1 && <h3>No posts found.</h3>}
         {posts &&
           // eslint-disable-next-line camelcase
           posts.map(({ title, excerpt, id, author, featured_media, date }) => (
