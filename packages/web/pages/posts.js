@@ -18,16 +18,32 @@ function PostsPage() {
 
       setLoading(true)
 
-      // Make request for posts.
-      await axios
-        .get(`${meta.wordpressBackend}/wp-json/wp/v2/posts?per_page=10`)
-        .then(({ data }) => {
-          setPosts(data)
-        })
-        .catch(error => {
-          setError(error)
-          // throw new Error('Throw some error')
-        })
+      try {
+        // Make request for posts.
+        const postsData = await axios.get(
+          `${meta.wordpressBackend}/wp-json/wp/v2/posts?per_page=10`
+        )
+
+        const data = await Promise.all(
+          postsData.data.map(async post => {
+            const authorId = post.author
+
+            const authorInfo = await axios.get(
+              `${meta.wordpressBackend}/wp-json/wp/v2/users/${authorId}`
+            )
+
+            return {
+              ...post,
+              author: authorInfo.data,
+            }
+          })
+        )
+
+        setPosts(data)
+      } catch (err) {
+        setError(err)
+        // throw new Error('Throw some error')
+      }
 
       setLoading(false)
     })()

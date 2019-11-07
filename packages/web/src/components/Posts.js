@@ -15,10 +15,11 @@ export default function Posts(props) {
       {error && <h3>Error.</h3>}
 
       {posts &&
-        posts.map(({ title, excerpt, id }) => (
+        posts.map(({ title, excerpt, id, author }) => (
           <PostCard
             title={title.rendered}
             excerpt={excerpt.rendered}
+            author={author}
             key={id}
           />
         ))}
@@ -29,5 +30,5 @@ export default function Posts(props) {
 Posts.propTypes = {
   posts: PropTypes.array,
   loading: PropTypes.bool,
-  error: PropTypes.oneOf([PropTypes.null, PropTypes.object]),
+  error: PropTypes.object,
 }
