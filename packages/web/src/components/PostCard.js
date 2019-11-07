@@ -6,15 +6,14 @@ import ReactHtmlParser from 'react-html-parser'
 function PostCard(props) {
   const { title, excerpt, author, image } = props
 
+  const postFallbackImage =
+    'https://schema.press/wp-content/uploads/edd/2019/01/schema-default-image.png'
+
   return (
     <article>
       <Card
-        image={
-          image ||
-          'https://blog.pcm.com/wp-content/uploads/2014/08/pcm_blog_intel_webcast_1200x5001-1200x500.jpg'
-        }
+        image={image || postFallbackImage}
         header={title}
-        meta={author.description}
         description={ReactHtmlParser(excerpt)}
         extra={
           <>
