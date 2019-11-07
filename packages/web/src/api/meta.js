@@ -1,6 +1,6 @@
 const meta = {
   title: 'Headless WordPress with React',
-  wordpressBackend: 'https://deafening-dinosaur.jurassic.ninja',
+  wordpressBackend: process.env.WP_URL,
 }
 
 export default meta

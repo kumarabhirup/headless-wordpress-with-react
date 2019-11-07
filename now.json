@@ -6,7 +6,9 @@
     "hwwr"
   ],
   "build": {
-    "env": {}
+    "env": {
+      "WP_URL": "@kumarhwwrbackendurl"
+    }
   },
   "builds": [
     {
