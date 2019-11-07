@@ -1,11 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
 
-import '../../sass/index.sass'
-
 export default function Navbar() {
   return (
-    <div className="links">
+    <div
+      className="links"
+      style={{ display: 'flex', justifyContent: 'space-around' }}
+    >
       <Link href="/">
         <a>Home</a>
       </Link>
