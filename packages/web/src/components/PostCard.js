@@ -1,15 +1,18 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 import { Card, Icon } from 'semantic-ui-react'
 import ReactHtmlParser from 'react-html-parser'
 
 function PostCard(props) {
-  const { title, excerpt, author } = props
+  const { title, excerpt, author, image } = props
 
   return (
     <article>
       <Card
-        image={author.avatar_urls[96]}
+        image={
+          image ||
+          'https://blog.pcm.com/wp-content/uploads/2014/08/pcm_blog_intel_webcast_1200x5001-1200x500.jpg'
+        }
         header={title}
         meta={author.description}
         description={ReactHtmlParser(excerpt)}
@@ -34,6 +37,7 @@ PostCard.propTypes = {
       96: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  image: PropTypes.string,
 }
 
 export default PostCard

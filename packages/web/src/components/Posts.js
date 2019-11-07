@@ -17,11 +17,17 @@ export default function Posts(props) {
 
       <Grid>
         {posts &&
-          posts.map(({ title, excerpt, id, author }) => (
+          // eslint-disable-next-line camelcase
+          posts.map(({ title, excerpt, id, author, featured_media }) => (
             <PostCard
               title={title.rendered}
               excerpt={excerpt.rendered}
               author={author}
+              image={
+                // eslint-disable-next-line camelcase
+                featured_media &&
+                featured_media.media_details.sizes.large.source_url
+              }
               key={id}
             />
           ))}

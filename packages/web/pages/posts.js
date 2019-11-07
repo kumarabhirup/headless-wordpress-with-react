@@ -27,14 +27,26 @@ function PostsPage() {
         const data = await Promise.all(
           postsData.data.map(async post => {
             const authorId = post.author
+            const featuredMediaId =
+              post.featured_media === 0 ? null : post.featured_media
 
             const authorInfo = await axios.get(
               `${meta.wordpressBackend}/wp-json/wp/v2/users/${authorId}`
             )
 
+            let mediaInfo
+            if (featuredMediaId) {
+              mediaInfo = await axios.get(
+                `${meta.wordpressBackend}/wp-json/wp/v2/media/${featuredMediaId}`
+              )
+            } else {
+              mediaInfo = 0
+            }
+
             return {
               ...post,
               author: authorInfo.data,
+              featured_media: mediaInfo.data,
             }
           })
         )
