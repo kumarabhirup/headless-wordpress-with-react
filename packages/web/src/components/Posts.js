@@ -2,6 +2,7 @@ import React from 'react'
 import { PropTypes } from 'prop-types'
 
 import PostCard from './PostCard'
+import Grid from './Grid'
 
 export default function Posts(props) {
   const { posts, loading, error } = props
@@ -14,15 +15,17 @@ export default function Posts(props) {
 
       {error && <h3>Error.</h3>}
 
-      {posts &&
-        posts.map(({ title, excerpt, id, author }) => (
-          <PostCard
-            title={title.rendered}
-            excerpt={excerpt.rendered}
-            author={author}
-            key={id}
-          />
-        ))}
+      <Grid>
+        {posts &&
+          posts.map(({ title, excerpt, id, author }) => (
+            <PostCard
+              title={title.rendered}
+              excerpt={excerpt.rendered}
+              author={author}
+              key={id}
+            />
+          ))}
+      </Grid>
     </>
   )
 }

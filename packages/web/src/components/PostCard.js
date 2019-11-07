@@ -1,5 +1,6 @@
 import React from 'react'
 import { PropTypes } from 'prop-types'
+import { Card, Icon } from 'semantic-ui-react'
 import ReactHtmlParser from 'react-html-parser'
 
 function PostCard(props) {
@@ -7,14 +8,18 @@ function PostCard(props) {
 
   return (
     <article>
-      <h2>{title}</h2>
-
-      {/* Maybe you shouldn't do this
-      <p dangerouslySetInnerHTML={{ __html: excerpt }} /> */}
-
-      {/* Try this instead */}
-      <p>{ReactHtmlParser(excerpt)}</p>
-      <p>{author.name}</p>
+      <Card
+        image={author.avatar_urls[96]}
+        header={title}
+        meta={author.description}
+        description={ReactHtmlParser(excerpt)}
+        extra={
+          <>
+            <Icon name="user" />
+            {author.name}
+          </>
+        }
+      />
     </article>
   )
 }
@@ -24,6 +29,7 @@ PostCard.propTypes = {
   excerpt: PropTypes.string.isRequired,
   author: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    description: PropTypes.string,
     avatar_urls: PropTypes.shape({
       96: PropTypes.string.isRequired,
     }).isRequired,
