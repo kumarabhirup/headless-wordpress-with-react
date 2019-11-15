@@ -30,6 +30,7 @@ function Posts(props) {
                 featured_media.media_details.sizes.large.source_url
               }
               dateTime={date}
+              id={id}
               key={id}
             />
           ))}

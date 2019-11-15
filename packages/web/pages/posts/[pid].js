@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Head } from 'next/head'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import '../../sass/index.sass'
@@ -8,11 +8,11 @@ import WithNavbar from '../../src/components/WithNavbar'
 import Post from '../../src/components/Post'
 import meta from '../../src/api/meta'
 
-export default function PostPage() {
+function PostPage() {
   const router = useRouter()
   const { pid } = router.query
 
-  const [post, setPost] = useState([])
+  const [post, setPost] = useState(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
@@ -28,30 +28,30 @@ export default function PostPage() {
           `${meta.wordpressBackend}/wp-json/wp/v2/posts/${pid}`
         )
 
-        const data = await Promise.all(async () => {
-          const authorId = postData.author
-          const featuredMediaId =
-            postData.featured_media === 0 ? null : postData.featured_media
+        const authorId = postData.data.author
+        const featuredMediaId =
+          postData.data.featured_media === 0
+            ? null
+            : postData.data.featured_media
 
-          const authorInfo = await axios.get(
-            `${meta.wordpressBackend}/wp-json/wp/v2/users/${authorId}`
+        const authorInfo = await axios.get(
+          `${meta.wordpressBackend}/wp-json/wp/v2/users/${authorId}`
+        )
+
+        let mediaInfo
+        if (featuredMediaId) {
+          mediaInfo = await axios.get(
+            `${meta.wordpressBackend}/wp-json/wp/v2/media/${featuredMediaId}`
           )
+        } else {
+          mediaInfo = 0
+        }
 
-          let mediaInfo
-          if (featuredMediaId) {
-            mediaInfo = await axios.get(
-              `${meta.wordpressBackend}/wp-json/wp/v2/media/${featuredMediaId}`
-            )
-          } else {
-            mediaInfo = 0
-          }
-
-          return {
-            ...postData,
-            author: authorInfo.data,
-            featured_media: mediaInfo.data,
-          }
-        })
+        const data = {
+          ...postData.data,
+          author: authorInfo.data,
+          featured_media: mediaInfo.data,
+        }
 
         setPost(data)
       } catch (err) {
@@ -66,9 +66,15 @@ export default function PostPage() {
   return (
     <WithNavbar>
       <Head>
-        <title>{meta.title}</title>
+        <title>
+          {post && post.title.rendered} - {meta.title}
+        </title>
       </Head>
       <Post post={post} loading={loading} error={error} />
     </WithNavbar>
   )
 }
+
+PostPage.getInitialProps = async () => ({})
+
+export default PostPage
