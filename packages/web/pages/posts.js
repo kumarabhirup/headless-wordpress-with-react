@@ -6,6 +6,7 @@ import '../sass/index.sass'
 import meta from '../src/api/meta'
 import Posts from '../src/components/Posts'
 import WithNavbar from '../src/components/WithNavbar'
+import wordpressDataAggregator from '../src/lib/dataAggregator'
 
 function PostsPage() {
   const [posts, setPosts] = useState([])
@@ -25,30 +26,7 @@ function PostsPage() {
         )
 
         const data = await Promise.all(
-          postsData.data.map(async post => {
-            const authorId = post.author
-            const featuredMediaId =
-              post.featured_media === 0 ? null : post.featured_media
-
-            const authorInfo = await axios.get(
-              `${meta.wordpressBackend}/wp-json/wp/v2/users/${authorId}`
-            )
-
-            let mediaInfo
-            if (featuredMediaId) {
-              mediaInfo = await axios.get(
-                `${meta.wordpressBackend}/wp-json/wp/v2/media/${featuredMediaId}`
-              )
-            } else {
-              mediaInfo = 0
-            }
-
-            return {
-              ...post,
-              author: authorInfo.data,
-              featured_media: mediaInfo.data,
-            }
-          })
+          postsData.data.map(async post => wordpressDataAggregator(post))
         )
 
         setPosts(data)

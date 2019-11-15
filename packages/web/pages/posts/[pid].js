@@ -7,6 +7,7 @@ import '../../sass/index.sass'
 import WithNavbar from '../../src/components/WithNavbar'
 import Post from '../../src/components/Post'
 import meta from '../../src/api/meta'
+import wordpressDataAggregator from '../../src/lib/dataAggregator'
 
 function PostPage() {
   const router = useRouter()
@@ -28,30 +29,7 @@ function PostPage() {
           `${meta.wordpressBackend}/wp-json/wp/v2/posts/${pid}`
         )
 
-        const authorId = postData.data.author
-        const featuredMediaId =
-          postData.data.featured_media === 0
-            ? null
-            : postData.data.featured_media
-
-        const authorInfo = await axios.get(
-          `${meta.wordpressBackend}/wp-json/wp/v2/users/${authorId}`
-        )
-
-        let mediaInfo
-        if (featuredMediaId) {
-          mediaInfo = await axios.get(
-            `${meta.wordpressBackend}/wp-json/wp/v2/media/${featuredMediaId}`
-          )
-        } else {
-          mediaInfo = 0
-        }
-
-        const data = {
-          ...postData.data,
-          author: authorInfo.data,
-          featured_media: mediaInfo.data,
-        }
+        const data = await wordpressDataAggregator(postData.data)
 
         setPost(data)
       } catch (err) {
