@@ -4,11 +4,11 @@ import { Card, Icon } from 'semantic-ui-react'
 import ReactHtmlParser from 'react-html-parser'
 import moment from 'moment'
 
-function PostCard(props) {
-  const { title, excerpt, author, image, dateTime } = props
+export const postFallbackImage =
+  'https://schema.press/wp-content/uploads/edd/2019/01/schema-default-image.png'
 
-  const postFallbackImage =
-    'https://schema.press/wp-content/uploads/edd/2019/01/schema-default-image.png'
+function PostCard(props) {
+  const { id, title, excerpt, author, image, dateTime } = props
 
   const publishedAgo = moment(dateTime).fromNow()
 
@@ -16,7 +16,11 @@ function PostCard(props) {
     <article>
       <Card
         image={image || postFallbackImage}
-        header={title}
+        header={
+          <h1>
+            <a href={`/posts/${id}`}>{title}</a>
+          </h1>
+        }
         description={ReactHtmlParser(excerpt)}
         extra={
           <>
@@ -44,6 +48,7 @@ PostCard.propTypes = {
   }).isRequired,
   image: PropTypes.string,
   dateTime: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
 }
 
 export default PostCard
