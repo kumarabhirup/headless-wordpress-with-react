@@ -1,10 +1,10 @@
 import React from 'react'
-import { PropTypes } from 'prop-types'
+import PropTypes from 'prop-types'
 
 import PostCard from './PostCard'
 import Grid from './Grid'
 
-export default function Posts(props) {
+function Posts(props) {
   const { posts, loading, error } = props
 
   return (
@@ -43,3 +43,5 @@ Posts.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
 }
+
+export default Posts
